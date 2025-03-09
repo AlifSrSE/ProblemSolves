@@ -1,13 +1,19 @@
-6
-5
-1 5 6 3 4
-1
-5
-4
-1 6 3 9
-6
-1 13 9 3 7 2
-4
-2 2 2 2
-5
-4 5 2 2 3
+def solve(a):
+    a.sort()
+    
+    result = 0
+    i = 0
+    j = len(a) - 1
+    while i < j:
+        result += a[j] - a[i]
+        i += 1
+        j -= 1
+    
+    return result
+
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    a = list(map(int, input().split()))
+    
+    print(solve(a))
