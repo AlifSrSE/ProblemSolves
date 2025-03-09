@@ -1,44 +1,36 @@
-def min_operations_to_sort_substrings(t, test_cases):
-    results = []
-    
-    for case in test_cases:
-        n, q, a, b, queries = case
-        for l, r in queries:
-            sub_a = a[l - 1:r]
-            sub_b = b[l - 1:r]
-
-            sorted_a = sorted(sub_a)
-            sorted_b = sorted(sub_b)
-
-            operations = sum(1 for x, y in zip(sorted_a, sorted_b) if x != y)
-            results.append(operations)
-    return results
+def main():
+    t = int(input())
+    for _ in range(t):
+        n, q = map(int, input().split())
+        a = input()
+        b = input()
+        
+        va = [[0] * 26 for _ in range(n + 1)]
+        vb = [[0] * 26 for _ in range(n + 1)]
+        
+        for p in range(n):
+            for u in range(26):
+                va[p + 1][u] = va[p][u]
+            va[p + 1][ord(a[p]) - ord('a')] += 1
+        
+        for p in range(n):
+            for u in range(26):
+                vb[p + 1][u] = vb[p][u]
+            vb[p + 1][ord(b[p]) - ord('a')] += 1
+        
+        for _ in range(q):
+            left, right = map(int, input().split())
+            total = 0
+            
+            for p in range(26):
+                ca = va[right][p] - va[left - 1][p]
+                cb = vb[right][p] - vb[left - 1][p]
+                diff = cb - ca
+                if diff < 0:
+                    diff = -diff
+                total += diff
+            
+            print(total // 2)
 
 if __name__ == "__main__":
-    import sys
-    input = sys.stdin.read
-    data = input().split()
-    
-    index = 0
-    t = int(data[index])
-    index += 1
-    test_cases = []
-    
-    for _ in range(t):
-        n = int(data[index])
-        q = int(data[index + 1])
-        index += 2
-        a = data[index]
-        b = data[index + 1]
-        index += 2
-        queries = []
-        for _ in range(q):
-            l = int(data[index])
-            r = int(data[index + 1])
-            queries.append((l, r))
-            index += 2
-        test_cases.append((n, q, a, b, queries))
-    
-    results = min_operations_to_sort_substrings(t, test_cases)
-    for result in results:
-        print(result)
+    main()

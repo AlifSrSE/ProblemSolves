@@ -2,7 +2,7 @@ def check(n, l, r, x, change_num):
     a = [0] * n
     for i in range(change_num):
         a[x[i] - 1] = 1
-
+    
     prefix_sums = [0] * n
     for i in range(n):
         prefix_sums[i] = (0 if i == 0 else prefix_sums[i-1]) + a[i]
