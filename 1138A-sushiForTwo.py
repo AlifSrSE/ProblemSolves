@@ -19,7 +19,7 @@ def longest_sushi_segment(n, sushi_types):
     
     max_length = max(max_length, 2 * min(current_tuna, current_eel))
     return max_length
-
+ 
 n = int(input().strip())
 sushi_types = list(map(int, input().strip().split()))
 print(longest_sushi_segment(n, sushi_types))
