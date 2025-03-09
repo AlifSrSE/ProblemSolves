@@ -1,25 +1,17 @@
-def max_sum_and_min_operations(n, array):
-    max_sum = sum(abs(x) for x in array)
-    min_operations = 0
-    i = 0
+def solve(a):
+    non_zeros = [x for x in a if x != 0]
     
-    while i < n:
-        if array[i] < 0:
-            min_operations += 1
-            while i < n and array[i] < 0:
-                i += 1
-        while i < n and array[i] >= 0:
-            i += 1
+    abs_sum = sum(abs(x) for x in a)
+    neg_transitions = sum(
+        1 for i in range(len(non_zeros))
+        if non_zeros[i] < 0 and (i == 0 or non_zeros[i-1] > 0)
+    )
     
-    return max_sum, min_operations
+    return f"{abs_sum} {neg_transitions}"
 
-t = int(input().strip())
-results = []
-
+t = int(input())
 for _ in range(t):
-    n = int(input().strip())
-    array = list(map(int, input().strip().split()))
-    results.append(max_sum_and_min_operations(n, array))
-
-for result in results:
-    print(result[0], result[1])
+    n = int(input())
+    a = list(map(int, input().split()))
+    
+    print(solve(a))
