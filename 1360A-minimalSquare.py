@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-02
+# Problem link : https://codeforces.com/contest/1360/problem/A
+
 def minimal_square(t, test_cases):
     results = []
     for a, b in test_cases:

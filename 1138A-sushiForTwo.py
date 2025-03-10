@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/1139/problem/A
+
 def longest_sushi_segment(n, sushi_types):
     max_length = 0
     current_tuna = 0

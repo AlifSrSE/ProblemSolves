@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/4691165/problem/B
+
 def max_training_days(n, contests):
     contests.sort()
     day = 1

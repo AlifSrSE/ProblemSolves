@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-2
+# Problem link : https://codeforces.com/contest/2065/problem/A
+
 def convert_to_plural(singular):
     if singular.endswith("us"):
         return singular[:-2] + "i"

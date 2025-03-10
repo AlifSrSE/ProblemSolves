@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-09
+# Problem link : https://codeforces.com/contest/1843/problem/D
+
 def search(leaf_nums, adj_lists, node, parent):
     for adj in adj_lists[node]:
         if adj != parent:

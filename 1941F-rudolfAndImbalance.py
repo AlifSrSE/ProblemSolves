@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-09
+# Problem link : https://codeforces.com/contest/1941/problem/F
+
 from bisect import bisect_right
 
 def main():

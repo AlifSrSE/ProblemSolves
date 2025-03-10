@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/469/problem/B
+
 def count_suitable_times(p_intervals, q_intervals, l, r):
     suitable_times = 0
     for t in range(l, r + 1):

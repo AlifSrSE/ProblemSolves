@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/1033/problem/A
+
 def is_same_quadrant(ax, ay, bx, by, cx, cy):
  return (bx < ax and cx < ax and by < ay and cy < ay) or \
            (bx < ax and cx < ax and by > ay and cy > ay) or \

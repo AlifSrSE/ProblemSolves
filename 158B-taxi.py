@@ -1,11 +1,9 @@
+# Author : AlifSrSE
+# Date : 2025-03-10
+# Problem link : https://codeforces.com/contest/158/problem/B
 
 import math
-def main():
-    #import sys
-    #sys.stdin = open("input.txt", "r")
-    #sys.stdout = open("output.txt", "w")
-    #sys.stderr = open("error.txt", "w")
-    
+def main():    
     n = int(input())
     ones = twos = threes = tx = 0
     arr = list(map(int, input().split()))

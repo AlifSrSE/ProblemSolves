@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/298/problem/B
+
 def earliest_time_to_reach(t, sx, sy, ex, ey, wind_directions):
     x, y = sx, sy
     

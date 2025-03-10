@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-03
+# Problem link : https://codeforces.com/contest/2042/problem/D
+
 import sys
 input = sys.stdin.readline
 

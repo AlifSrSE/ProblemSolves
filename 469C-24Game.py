@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-10
+# Problem link : https://codeforces.com/contest/469/problem/C
+
 def solve_24_game(n):
     if n < 4:
         print("NO")

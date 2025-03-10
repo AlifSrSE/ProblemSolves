@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/1538/problem/A
+
 def min_moves(n, stones):
     min_power = min(stones)
     max_power = max(stones)

@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-02
+# Problem link : https://codeforces.com/contest/2042/problem/A
+
 import sys
 
 def solve(a, k):

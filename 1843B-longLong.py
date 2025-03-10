@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-09
+# Problem link : https://codeforces.com/contest/1843/problem/B
+
 def solve(a):
     non_zeros = [x for x in a if x != 0]
     
@@ -8,7 +12,7 @@ def solve(a):
     )
     
     return f"{abs_sum} {neg_transitions}"
-
+ 
 t = int(input())
 for _ in range(t):
     n = int(input())

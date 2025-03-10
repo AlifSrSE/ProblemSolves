@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-10
+# Problem link : https://codeforces.com/contest/469/problem/D
+
 def divide_sets(n, a, b, p):
     index_map = {p[i]: i for i in range(n)}
     assignment = [-1] * n 

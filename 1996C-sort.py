@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-09
+# Problem link : https://codeforces.com/contest/1996/problem/C
+
 def main():
     t = int(input())
     for _ in range(t):

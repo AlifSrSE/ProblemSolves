@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-02-16
+# Problem link : https://codeforces.com/contest/469/problem/A
+
 def can_pass_all_levels(n, x_levels, y_levels):
     all_levels = set(x_levels).union(set(y_levels))
     if len(all_levels) == n:

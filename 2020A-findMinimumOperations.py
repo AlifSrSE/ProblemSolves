@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-02
+# Problem link : https://codeforces.com/contest/2020/problem/A
+
 def min_operations(n, k):
     if k == 1:
         return n 

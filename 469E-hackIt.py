@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-10
+# Problem link : https://codeforces.com/contest/469/problem/E
+
 def sum_of_digits(x):
     return sum(int(digit) for digit in str(x))
 

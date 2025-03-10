@@ -1,3 +1,7 @@
+# Author : AlifSrSE
+# Date : 2025-03-02
+# Problem link : https://codeforces.com/contest/421/problem/B
+
 from itertools import permutations
 
 def calculate_happiness(order, g):
