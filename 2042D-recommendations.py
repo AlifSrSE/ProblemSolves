@@ -1,47 +1,58 @@
 import sys
+input = sys.stdin.readline
 
-def solve():
-    n = int(sys.stdin.readline().strip())
-    fl = [0] * n
-    fr = [0] * n
-    a = []
+def find_strongly_recommended_tracks(t, test_cases):
+    results = []
     
-    for i in range(n):
-        l, r = map(int, sys.stdin.readline().split())
-        a.append([l, r, i])
+    for n, segments in test_cases:
+        recommended_counts = [0] * n
+        
+        for i in range(n):
+            li, ri = segments[i]
+            min_r = float('inf') 
+            max_l = -float('inf')  
+            predictor_count = 0
+            
+            for j in range(n):
+                if i != j:
+                    lj, rj = segments[j]
+                    if lj <= li and ri <= rj:
+                        max_l = max(max_l, lj)
+                        min_r = min(min_r, rj)
+                        predictor_count += 1
+            
+            if predictor_count == 0:
+                recommended_counts[i] = 0
+                continue
+            
+            if max_l <= min_r:
+                segment_length = ri - li + 1
+                intersection_length = min_r - max_l + 1
+                recommended_counts[i] = intersection_length - segment_length if intersection_length > segment_length else 0
+            else:
+                recommended_counts[i] = 0
+        
+        results.append(recommended_counts)
     
-    a.sort(key=lambda x: (x[0], -x[1]))
-    
-    s = set()
-    for i in range(n):
-        l, r, idx = a[i]
-        it = next((x for x in s if x >= r), None)
-        fr[idx] = r if it is None else it
-        if i < n - 1 and a[i + 1][0] == l and a[i + 1][1] == r:
-            fr[idx] = r
-        s.add(r)
-    
-    a.sort(key=lambda x: (-x[1], x[0]))
-    s.clear()
-    
-    for i in range(n):
-        l, r, idx = a[i]
-        it = next((x for x in s if x <= -l), None)
-        fl[idx] = l if it is None else -it
-        if i < n - 1 and a[i + 1][0] == l and a[i + 1][1] == r:
-            fl[idx] = l
-        s.add(-l)
-    
-    a.sort(key=lambda x: x[2])
-    
-    for i in range(n):
-        print(a[i][0] - a[i][1] + fr[i] - fl[i])
-
+    return results
 
 def main():
-    tc = int(sys.stdin.readline().strip())
-    for _ in range(tc):
-        solve()
+    t = int(input().strip())
+    test_cases = []
+    
+    for _ in range(t):
+        n = int(input().strip())
+        segments = []
+        for _ in range(n):
+            l, r = map(int, input().strip().split())
+            segments.append((l, r))
+        test_cases.append((n, segments))
+    
+    results = find_strongly_recommended_tracks(t, test_cases)
+    
+    for result in results:
+        for count in result:
+            print(count)
 
 if __name__ == "__main__":
     main()
