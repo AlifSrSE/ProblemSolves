@@ -10,16 +10,11 @@ def main():
     for _ in range(t):
         l, r = map(int, input().split())
         ans = {}
-        for i in range(l, min(r, l + 90) + 1):
-            now = i
-            mx = -1 
-            mn = float('inf')
-            
-            while now:
-                digit = now % 10
-                mx = max(mx, digit)
-                mn = min(mn, digit)
-                now //= 10
+        end = min(r, l + 90)
+        for i in range(l, end + 1):
+            digits = str(i)
+            mx = int(max(digits)) 
+            mn = int(min(digits)) 
             ans[mx - mn] = i
         
         for i in range(9, -1, -1):
