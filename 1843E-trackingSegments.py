@@ -8,25 +8,33 @@ def check(n, l, r, x, change_num):
         a[x[i] - 1] = 1
     
     prefix_sums = [0] * n
-    for i in range(n):
-        prefix_sums[i] = (0 if i == 0 else prefix_sums[i-1]) + a[i]
+    prefix_sums[0] = a[0]
+    for i in range(1, n):
+        prefix_sums[i] = prefix_sums[i-1] + a[i]
     
-    return any(
-        2 * (prefix_sums[r[i]-1] - (0 if l[i] == 1 else prefix_sums[l[i]-2])) > r[i] - l[i] + 1
-        for i in range(len(l))
-    )
+    for i in range(len(l)):
+        ones = prefix_sums[r[i]-1] - (0 if l[i] == 1 else prefix_sums[l[i]-2])
+        length = r[i] - l[i] + 1
+        zeros = length - ones
+        if ones > zeros:
+            return True
+    return False
 
 def solve(n, l, r, x):
-    result = -1
-    lower = 0
-    upper = len(x)
-    while lower <= upper:
-        middle = (lower + upper) // 2
-        if check(n, l, r, x, middle):
-            result = middle
-            upper = middle - 1
+    if not check(n, l, r, x, len(x)):
+        return -1
+        
+    left = 0
+    right = len(x)
+    result = right
+    
+    while left <= right:
+        mid = (left + right) // 2
+        if check(n, l, r, x, mid):
+            result = mid
+            right = mid - 1
         else:
-            lower = middle + 1
+            left = mid + 1
     
     return result
 
@@ -41,6 +49,8 @@ for _ in range(t):
         r.append(ri)
     
     q = int(input())
-    x = list(map(int, input().split()))
+    x = []
+    for _ in range(q):
+        x.append(int(input()))
     
     print(solve(n, l, r, x))
