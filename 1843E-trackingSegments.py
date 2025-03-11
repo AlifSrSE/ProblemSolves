@@ -1,5 +1,5 @@
 # Author : AlifSrSE
-# Date : 2025-03-09
+# Date : 2025-03-11
 # Problem link : https://codeforces.com/contest/1843/problem/E
 
 def check(n, l, r, x, change_num):
