@@ -3,9 +3,8 @@
 # Problem link : https://codeforces.com/contest/2042/problem/D
 
 import sys
-input = sys.stdin.readline
 
-def find_strongly_recommended_tracks(t, test_cases):
+def find_strongly_recommended_tracks(test_cases):
     results = []
     
     for n, segments in test_cases:
@@ -13,8 +12,8 @@ def find_strongly_recommended_tracks(t, test_cases):
         
         for i in range(n):
             li, ri = segments[i]
-            min_r = float('inf') 
-            max_l = -float('inf')  
+            min_r = float('inf')
+            max_l = -float('inf')
             predictor_count = 0
             
             for j in range(n):
@@ -26,37 +25,32 @@ def find_strongly_recommended_tracks(t, test_cases):
                         predictor_count += 1
             
             if predictor_count == 0:
-                recommended_counts[i] = 0
                 continue
             
             if max_l <= min_r:
-                segment_length = ri - li + 1
-                intersection_length = min_r - max_l + 1
-                recommended_counts[i] = intersection_length - segment_length if intersection_length > segment_length else 0
-            else:
-                recommended_counts[i] = 0
+                recommended_counts[i] = max(0, min_r - max_l + 1 - (ri - li + 1))
         
         results.append(recommended_counts)
     
     return results
 
 def main():
-    t = int(input().strip())
+    t = int(sys.stdin.readline())
     test_cases = []
     
     for _ in range(t):
-        n = int(input().strip())
+        n = int(sys.stdin.readline())
         segments = []
         for _ in range(n):
-            l, r = map(int, input().strip().split())
+            l, r = map(int, sys.stdin.readline().split())
             segments.append((l, r))
         test_cases.append((n, segments))
     
-    results = find_strongly_recommended_tracks(t, test_cases)
+    results = find_strongly_recommended_tracks(test_cases)
     
+    output = sys.stdout.write
     for result in results:
-        for count in result:
-            print(count)
+        output('\n'.join(map(str, result)) + '\n')
 
 if __name__ == "__main__":
     main()
