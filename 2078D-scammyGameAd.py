@@ -2,38 +2,46 @@
 # Date : 2025-03-15
 # Problem link : https://codeforces.com/contest/2078/problem/D
  
+import sys
+import heapq
+ 
 def solve():
-    n = int(input())
-    gates = []
-    for _ in range(n):
-        line = input().strip()
-        parts = line.split()
-        left_gate = f"{parts[0]} {parts[1]}" 
-        right_gate = f"{parts[2]} {parts[3]}"  
-        gates.append((left_gate, right_gate))
-    
-    dp = {(1, 1): 2}
-    
-    for left_gate, right_gate in gates:
-        left_op, left_val = left_gate[0], int(left_gate[2:])
-        right_op, right_val = right_gate[0], int(right_gate[2:])
-        
+    n = int(sys.stdin.readline()) 
+    gates = [sys.stdin.readline().split() for _ in range(n)]
+ 
+    dp = {1: 1} 
+    MAX_STATES = 1000  
+ 
+    for left_op, left_val, right_op, right_val in gates:
+        left_val, right_val = int(left_val), int(right_val)
         new_dp = {}
-        for (left, right), _ in dp.items():
+ 
+        heap = [(-l - r, l, r) for l, r in dp.items()]
+        heapq.heapify(heap)
+ 
+        for _ in range(min(MAX_STATES, len(heap))):
+            _, left, right = heapq.heappop(heap)
             left_add = left_val if left_op == '+' else left * (left_val - 1)
             right_add = right_val if right_op == '+' else right * (right_val - 1)
-            total_new = left_add + right_add
-            
-            for i in range(total_new + 1):
-                new_left = left + i
-                new_right = right + (total_new - i)
-                new_total = new_left + new_right
-                new_dp[(new_left, new_right)] = max(new_dp.get((new_left, new_right), 0), new_total)
-        
-        dp = new_dp
-    
-    print(max(dp.values()))
+            total = left_add + right_add
  
-t = int(input())
+            new_left0, new_right0 = left, right + total
+            new_left1, new_right1 = left + total, right
+ 
+            if new_left0 in new_dp:
+                new_dp[new_left0] = max(new_dp[new_left0], new_right0)
+            else:
+                new_dp[new_left0] = new_right0
+ 
+            if new_left1 in new_dp:
+                new_dp[new_left1] = max(new_dp[new_left1], new_right1)
+            else:
+                new_dp[new_left1] = new_right1
+ 
+        dp = dict(heapq.nlargest(MAX_STATES, new_dp.items(), key=lambda x: x[0] + x[1]))
+ 
+    print(max(left + right for left, right in dp.items()))
+ 
+t = int(sys.stdin.readline())
 for _ in range(t):
     solve()
