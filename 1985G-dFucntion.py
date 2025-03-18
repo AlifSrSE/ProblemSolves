@@ -1,5 +1,5 @@
 # Author : AlifSrSE
-# Date : 2025-03-09
+# Date : 2025-03-17
 # Problem link : https://codeforces.com/contest/1985/problem/G
 
 MODULUS = 10**9 + 7
