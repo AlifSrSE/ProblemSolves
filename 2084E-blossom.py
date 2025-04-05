@@ -1,91 +1,104 @@
 # Author: AlifSrSE
 # Email: alif.rahman.c@gmail.com
 
-MOD = 1000000007
+class Modular:
+    def __init__(self, value=0, mod=10**9 + 7):
+        self.mod = mod
+        self.value = value % mod
+        if self.value < 0:
+            self.value += mod
 
-def modMul(a, b):
-    return (a % MOD) * (b % MOD) % MOD
+    def __add__(self, other):
+        return Modular(self.value + other.value, self.mod)
 
-def precomputeFactorials(n):
-    fact = [1] * (n + 1)
+    def __sub__(self, other):
+        return Modular(self.value - other.value, self.mod)
+
+    def __mul__(self, other):
+        if isinstance(other, Modular):
+            return Modular(self.value * other.value, self.mod)
+        else:
+            return Modular(self.value * other, self.mod)
+
+    def __truediv__(self, other):
+        return self * Modular(pow(other.value, self.mod - 2, self.mod), self.mod)
+
+    def __repr__(self):
+        return str(self.value)
+
+def factorial(n, mod):
+    fact = [Modular(1, mod)]
     for i in range(1, n + 1):
-        fact[i] = modMul(fact[i - 1], i)
+        fact.append(fact[-1] * Modular(i, mod))
     return fact
 
-def computeMex(S):
-    cur = 0
-    while cur in S:
-        cur += 1
-    return cur
-
 def main():
-    T = int(input())  
-    for _ in range(T):
-        n = int(input()) 
-        A = list(map(int, input().split())) 
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+    
+    index = 0
+    tt = int(data[index])
+    index += 1
+    results = []
+    
+    for _ in range(tt):
+        n = int(data[index])
+        index += 1
+        a = list(map(int, data[index:index + n]))
+        index += n
         
-        used = [False] * n
-        valid = True
-        
+        pos = [-1] * n
         for i in range(n):
-            if A[i] != -1:
-                if used[A[i]]:
-                    valid = False
-                    break
-                used[A[i]] = True
+            if a[i] >= 0:
+                pos[a[i]] = i
         
-        if not valid:
-            print(0)
-            continue
-        
-        missingVals = [v for v in range(n) if not used[v]]
-        m = len(missingVals)
-        
-        fact = precomputeFactorials(m)
-        
-        prefixMissing = [0] * n
+        pref = [0] * (n + 1)
         for i in range(n):
-            prefixMissing[i] = 1 if A[i] == -1 else 0
-            if i > 0:
-                prefixMissing[i] += prefixMissing[i - 1]
+            pref[i + 1] = pref[i] + (1 if a[i] == -1 else 0)
         
-        ans = 0
+        cnt = [0] * (n + 1)
+        for i in range(n):
+            for j in range(i + 1, n + 1):
+                cnt[pref[j] - pref[i]] += 1
         
-        for l in range(n):
-            for r in range(l, n):
-                t = prefixMissing[r] - (prefixMissing[l - 1] if l > 0 else 0)
-                
-                segFixed = set()
-                for i in range(l, r + 1):
-                    if A[i] != -1:
-                        segFixed.add(A[i])
-                
-                segSum = 0
-                idx = list(range(m))
-                
-                def gen(start, left, comb):
-                    nonlocal segSum
-                    if left == 0:
-                        U = segFixed.copy()
-                        for x in comb:
-                            U.add(missingVals[x])
-                        curMex = computeMex(U)
-                        segSum = (segSum + curMex) % MOD
-                        return
-                    
-                    for i in range(start, m - left + 1):
-                        comb.append(i)
-                        gen(i + 1, left - 1, comb)
-                        comb.pop()
-                
-                if t <= m:
-                    gen(0, t, [])
-                
-                weight = modMul(fact[t], fact[m - t])
-                segContribution = modMul(segSum, weight)
-                ans = (ans + segContribution) % MOD
+        fact = factorial(n, 10**9 + 7)
+        coeff = [Modular(1, 10**9 + 7) for _ in range(n + 1)]
         
-        print(ans)
+        L = -1
+        R = -1
+        skips = 0
+        ans = Modular(0, 10**9 + 7)
+        
+        for val in range(n):
+            if pos[val] != -1:
+                if L == -1:
+                    L = pos[val]
+                    R = pos[val] + 1
+                    cnt = [0] * (n + 1)
+                    for i in range(L + 1):
+                        for j in range(R, n + 1):
+                            cnt[pref[j] - pref[i]] += 1
+                else:
+                    while L > pos[val]:
+                        for j in range(R, n + 1):
+                            cnt[pref[j] - pref[L]] -= 1
+                        L -= 1
+                    while R <= pos[val]:
+                        for i in range(L + 1):
+                            cnt[pref[R] - pref[i]] -= 1
+                        R += 1
+            else:
+                for k in range(n + 1):
+                    coeff[k] *= Modular(k - skips, 10**9 + 7)
+                skips += 1
+            
+            for k in range(n + 1):
+                ans += coeff[k] * Modular(cnt[k], 10**9 + 7) * fact[pref[n] - skips]
+        
+        results.append(str(ans))
+    
+    print('\n'.join(results))
 
 if __name__ == "__main__":
     main()
