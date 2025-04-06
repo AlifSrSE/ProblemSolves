@@ -1,0 +1,118 @@
+# 🐍 PYTHON COMPETITIVE PROGRAMMING CHEATSHEET
+# 🔥 v3.0 - TLE & MLE Optimization Master Guide
+
+=== I/O OPTIMIZATIONS (TLE) ===
+📌 [1] Ultra-fast input:
+import sys
+input = sys.stdin.read  # Reads ALL input
+data = input().split()  # Process as list
+
+📌 [2] Fast output:
+sys.stdout.write(" ".join(map(str, arr)))  # 2x faster than print()
+
+=== MEMORY OPTIMIZATIONS (MLE) ===
+📌 [3] __slots__ for classes (40% less memory):
+class Node:
+    __slots__ = ['val', 'next']
+    def __init__(self, val):
+        self.val = val
+
+📌 [4] Generators for large data:
+def read_large_file():
+    with open('big.txt') as f:
+        yield from f  # No full storage
+
+📌 [5] array.array for homogeneous data:
+import array
+arr = array.array('i', [1,2,3])  # 50% less RAM than list
+
+=== DATA STRUCTURES ===
+📌 [6] Deque (O(1) ops):
+from collections import deque
+q = deque([1,2,3])
+q.appendleft(0)  # Fast left insert
+
+📌 [7] Priority Queue:
+import heapq
+heapq.heappush(heap, (priority, item))
+
+📌 [8] Memory-efficient dicts:
+d = {}.fromkeys(keys, 0)  # Pre-allocated
+
+=== ALGORITHM OPTIMIZATIONS ===
+📌 [9] Sliding window template:
+left = 0
+for right in range(n):
+    while invalid(window):
+        left += 1
+    update_answer()
+
+📌 [10] DP space optimization:
+dp_prev, dp_curr = [0]*n, [0]*n  # Only store last 2 states
+
+=== BIT & MATH TRICKS ===
+📌 [11] Bitmask compression:
+mask = 0
+mask |= (1 << 3)  # Set bit 3
+if mask & (1 << 3):  # Check bit
+
+📌 [12] Fast modular exponentiation:
+pow(a, b, mod)  # (a^b)%mod
+
+=== RECURSION CONTROL ===
+📌 [13] Recursion→Iteration:
+stack = [(root, False)]
+while stack:
+    node, visited = stack.pop()
+    if visited:
+        process(node)
+    else:
+        stack.append((node, True))
+        stack.extend((child, False) for child in children)
+
+=== NUMPY (When Allowed) ===
+📌 [14] Memory-efficient arrays:
+import numpy as np
+arr = np.zeros(10**6, dtype=np.int32)  # 4MB vs 8MB list
+
+=== DEBUGGING ===
+📌 [15] Memory measurement:
+import sys
+x = [0]*10**6
+print(sys.getsizeof(x)//1024, "KB")
+
+📌 [16] Time measurement:
+from time import perf_counter
+start = perf_counter()
+# Code
+print(f"{perf_counter()-start:.5f}s")
+
+=== CONTEST STRATEGIES ===
+📌 [17] MLE Prevention:
+1. Use generators/yield
+2. Delete temp vars (del x)
+3. Avoid globals → use locals
+4. Test with max input size
+
+📌 [18] TLE Prevention:
+1. Replace nested loops
+2. Use set/dict for O(1) lookups
+3. Precompute values
+4. Use PyPy for recursion
+
+# 🚀 Last-Minute Checklist
+✅ TLE:
+  - Replaced input() with sys.stdin?
+  - Avoided O(n²) algorithms?
+  - Used set/dict for lookups?
+
+✅ MLE:
+  - Used __slots__ in classes?
+  - Deleted large temp vars?
+  - Converted recursion→iteration?
+
+# 🎯 PRO TIPS
+• PyPy uses less memory for some cases
+• For O(n²)→O(n), try two pointers
+• Bitmasking saves memory for flags
+• 1e6 ints = ~8MB (list) vs ~4MB (array.array)
