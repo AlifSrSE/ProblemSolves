@@ -1,42 +1,32 @@
 # Author: AlifSrSE
 # Email: alif.rahman.c@gmail.com
 
-import sys
-
-def find_root(parents, node):
-    if parents[node] == -1:
-        return node
-    parents[node] = find_root(parents, parents[node])
-    return parents[node]
+from collections import deque
 
 def main():
-    input = sys.stdin.readline
     t = int(input())
-    
     for _ in range(t):
         n = int(input())
-        parents = [-1] * n
-        result = ["!"]
+        adj = [[] for _ in range(n + 1)] 
+        edges = [] 
         
-        for i in range(n):
-            for j in range(i + 1, n):
-                if find_root(parents, i) != find_root(parents, j):
-                    v1, v2 = i, j
-                    while True:
-                        print(f"? {v1 + 1} {v2 + 1}", flush=True)
-                        
-                        x = int(input()) - 1
-                        if x == v1:
-                            result.extend([str(v1 + 1), str(v2 + 1)])
-                            parents[find_root(parents, v2)] = find_root(parents, v1)
-                            break
-                            
-                        if find_root(parents, x) != find_root(parents, v1):
-                            v2 = x
-                        else:
-                            v1 = x
+        for i in range(2, n + 1):
+            print(f"? 1 {i}", flush=True)
+            x = int(input())
+            if x == 1:
+                edges.append((1, i))
+            else:
+                print(f"? {x} {i}", flush=True)
+                y = int(input())
+                if y == x:
+                    edges.append((x, i))
+                else:
+                    edges.append((x, i))
         
-        print(' '.join(result), flush=True)
+        print("! ", end="", flush=True)
+        for a, b in edges:
+            print(f"{a} {b} ", end="", flush=True)
+        print(flush=True)
 
 if __name__ == "__main__":
     main()
