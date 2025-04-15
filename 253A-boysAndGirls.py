@@ -1,33 +1,22 @@
 # Author: AlifSrSE
 # Email: alif.rahman.c@gmail.com
 
-def solve(num_boys, num_girls):
-    result = []
-    while num_boys > 0 or num_girls > 0:
-        if num_boys > num_girls:
-            if len(result) == 0 or result[-1] != 'B':
-                result.append('B')
-                num_boys -= 1
-            else:
-                if num_girls > 0:
-                    result.append('G')
-                    num_girls -= 1
-                else:
-                    result.append('B')
-                    num_boys -= 1
-        else:
-            if len(result) == 0 or result[-1] != 'G':
-                result.append('G')
-                num_girls -= 1
-            else:
-                if num_boys > 0:
-                    result.append('B')
-                    num_boys -= 1
-                else:
-                    result.append('G')
-                    num_girls -= 1
-    return ''.join(result)
-
-if __name__ == "__main__":
-    num_boys, num_girls = map(int, input().split())
-    print(solve(num_boys, num_girls))
+with open('input.txt', 'r') as input_file, open('output.txt', 'w') as output_file:
+    num_boys, num_girls = map(int, input_file.readline().split())
+    comm = diff = 0
+    min_char = max_char = ''
+    
+    if num_boys > num_girls:
+        comm = num_girls
+        diff = num_boys - num_girls
+        max_char = 'B'
+        min_char = 'G'
+    else:
+        comm = num_boys
+        diff = num_girls - num_boys
+        max_char = 'G'
+        min_char = 'B'
+    
+    output_file.write(f"{max_char}{min_char}" * comm)
+    output_file.write(f"{max_char}" * diff)
+    output_file.write("\n")
