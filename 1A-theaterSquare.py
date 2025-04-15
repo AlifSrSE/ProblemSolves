@@ -1,6 +1,6 @@
 # Author: AlifSrSE
 # Email: alif.rahman.c@gmail.com
-# Problem: https://codeforces.com/problemset/problem/1/A
+# Link: https://codeforces.com/problemset/problem/1/A
 
 def solve():
     length, width, stone = map(int, input().split())
