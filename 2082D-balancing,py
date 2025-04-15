@@ -1,0 +1,24 @@
+# Author: AlifSrSE
+# Email: alif.rahman.c@gmail.com
+
+def solve():
+    n = int(input())
+    a = list(map(int, input().split()))
+    cnt = 0
+    for i in range(n - 1):
+        cnt += (a[i] > a[i + 1])
+    if cnt % 2 == 1 or cnt == 0:
+        print((cnt + 1) // 2)
+        return
+    i = 0
+    j = n - 1
+    while i + 1 < n and a[i] <= a[i + 1]:
+        i += 1
+    while j > 0 and a[j] >= a[j - 1]:
+        j -= 1
+    print(cnt // 2 + (a[i] + j - i > a[j]))
+
+if __name__ == "__main__":
+    _t = int(input())
+    for _ in range(_t):
+        solve()
