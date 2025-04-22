@@ -15,7 +15,6 @@ def alif(s):
 
     return min_diff
 
-# Input handling
 _ = int(input())
 s = input()
 print(alif(s))

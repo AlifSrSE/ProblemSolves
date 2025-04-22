@@ -14,7 +14,6 @@ def alif(a, b):
 
     return min(even_count_a, len(b) - even_count_b) + min(len(a) - even_count_a, even_count_b)
 
-# Input handling
 if __name__ == "__main__":
     n, m = map(int, input().split())
     a = read_array(n)
