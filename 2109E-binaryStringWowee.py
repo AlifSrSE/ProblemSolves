@@ -8,23 +8,23 @@ MAX = 501
 fact = [1] * MAX
 invfact = [1] * MAX
 
-def power(a, b):
+def power(ai, bi):
     res = 1
-    a %= MOD
-    while b > 0:
-        if b & 1:
-            res = (res * a) % MOD
-        a = (a * a) % MOD
-        b >>= 1
+    ai %= MOD
+    while bi > 0:
+        if bi & 1:
+            res = (res * ai) % MOD
+        ai = (ai * ai) % MOD
+        bi >>= 1
     return res
 
-def modinv(a):
-    return power(a, MOD - 2)
+def modinv(ai):
+    return power(ai, MOD - 2)
 
-def comb(n, k):
-    if k < 0 or k > n:
+def comb(ni, ki):
+    if ki < 0 or ki > ni:
         return 0
-    return (fact[n] * invfact[k] % MOD * invfact[n - k]) % MOD
+    return (fact[ni] * invfact[ki] % MOD * invfact[ni - ki]) % MOD
 
 def init_factorials():
     fact[0] = invfact[0] = 1
@@ -33,31 +33,31 @@ def init_factorials():
         invfact[i] = modinv(fact[i])
 
 def alif():
-    n, k = map(int, input().split())
-    s = input().strip()
+    ni, ki = map(int, input().split())
+    si = input().strip()
     
-    dp = [0] * (k + 1)
+    dp = [0] * (ki + 1)
     dp[0] = 1
     
-    for i in range(n - 1, -1, -1):
-        ndp = [0] * (k + 1)
-        for len_ in range(k + 1):
+    for i in range(ni - 1, -1, -1):
+        ndp = [0] * (ki + 1)
+        for len_ in range(ki + 1):
             if dp[len_] == 0:
                 continue
-            for cnt in range(k - len_ + 1):
-                T = len_ + cnt
-                even = (T + 1) // 2
-                odd = T // 2
-                parity = int(s[i])
-                P = even if parity == 0 else odd
-                ways = comb(P, cnt)
-                ndp[T] = (ndp[T] + dp[len_] * ways % MOD) % MOD
+            for cnt in range(ki - len_ + 1):
+                TI = len_ + cnt
+                even = (TI + 1) // 2
+                odd = TI // 2
+                parity = int(si[i])
+                PI = even if parity == 0 else odd
+                ways = comb(PI, cnt)
+                ndp[TI] = (ndp[TI] + dp[len_] * ways % MOD) % MOD
         dp = ndp
     
-    print(dp[k])
+    print(dp[ki])
 
 init_factorials()
 
-t = int(input())
-for _ in range(t):
+ti = int(input())
+for _ in range(ti):
     alif()
