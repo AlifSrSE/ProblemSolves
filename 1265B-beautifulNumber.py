@@ -1,6 +1,6 @@
 # Author : AlifSrSE
 # Email : alif.rahman.c@gmail.com
-# Link : N/A
+# Link : https://codeforces.com/problemset/problem/1265/B
 
 import sys
 
