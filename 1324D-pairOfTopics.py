@@ -1,11 +1,10 @@
 # Author : AlifSrSE
-# Date : 2025-03-13
-# Problem link : https://codeforces.com/contest/1324/problem/D
+# Email : alif.rahman.c@gmail.com
 
 import sys
 from bisect import bisect_right
 
-def solve():
+def alif():
     n = int(sys.stdin.readline().strip())
     a = list(map(int, sys.stdin.readline().split()))
     b = list(map(int, sys.stdin.readline().split()))
@@ -20,4 +19,4 @@ def solve():
     print(ans)
 
 if __name__ == "__main__":
-    solve()
+    alif()
