@@ -1,8 +1,7 @@
 # Author : AlifSrSE
-# Date : 2025-03-02
-# Problem link : https://codeforces.com/contest/1360/problem/A
+# Email : alif.rahman.c@gmail.com
 
-def minimal_square(t, test_cases):
+def alif(t, test_cases):
     results = []
     for a, b in test_cases:
         side1 = max(2*a, b)
@@ -12,9 +11,9 @@ def minimal_square(t, test_cases):
         area = min_side * min_side
         results.append(area)
     return results
-
+ 
 t = int(input())
 test_cases = [tuple(map(int, input().split())) for _ in range(t)]
-results = minimal_square(t, test_cases)
+results = alif(t, test_cases)
 for result in results:
     print(result)
