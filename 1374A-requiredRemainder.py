@@ -4,18 +4,12 @@
 import sys
 
 def alif():
-    a, b, c = map(int, sys.stdin.readline().split())
-    if a < c:
-        x = 1
-    else:
-        x = -1
-        
-    if a * b > c:
-        y = b
-    else:
-        y = -1
+    x, y, n = map(int, sys.stdin.readline().split())
+    ans = n - (n % x) + y
 
-    print(x, y)
+    if ans > n:
+        ans -= x
+    print(ans)
 
 def main():
     t = int(sys.stdin.readline())

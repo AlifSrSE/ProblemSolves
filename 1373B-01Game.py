@@ -4,18 +4,16 @@
 import sys
 
 def alif():
-    a, b, c = map(int, sys.stdin.readline().split())
-    if a < c:
-        x = 1
+    s = sys.stdin.readline().strip()
+    zeros = s.count('0')
+    ones = s.count('1')
+    
+    removable = min(zeros, ones)
+    
+    if removable % 2 == 1:
+        print("DA")
     else:
-        x = -1
-        
-    if a * b > c:
-        y = b
-    else:
-        y = -1
-
-    print(x, y)
+        print("NET")
 
 def main():
     t = int(sys.stdin.readline())
