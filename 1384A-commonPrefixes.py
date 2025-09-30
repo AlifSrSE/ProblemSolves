@@ -1,3 +1,6 @@
+# Author : AlifSrSE
+# Email : alif.rahman.c@gmail.com
+ 
 def alif():
     try:
         n = int(input())
