@@ -3,7 +3,7 @@
  
 import sys
 
-def solve():
+def alif():
     data = sys.stdin.read().split()
     if not data:
         return
@@ -39,4 +39,4 @@ def solve():
 
     sys.stdout.write('\n'.join(output_lines) + '\n')
 
-solve()
+alif()
