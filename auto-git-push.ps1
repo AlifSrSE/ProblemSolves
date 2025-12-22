@@ -20,9 +20,10 @@ $action = {
         Write-Host "File changed: $fileName" -ForegroundColor Cyan
         
         try {
-            git add .
-            git commit -m "$fileName"
-            git push origin main
+            # Stage only the specific file that changed
+            git add "$fileName"
+            git commit -m "Update $fileName"
+            git push origin master
             Write-Host "Successfully pushed: $fileName" -ForegroundColor Green
         } catch {
             Write-Host "Error: $_" -ForegroundColor Red
