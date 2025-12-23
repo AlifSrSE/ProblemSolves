@@ -1,40 +1,29 @@
 # Auto Git Push Script
-# This script watches for file changes and automatically commits and pushes to git
+# This script finds all files changed today and commits/pushes them
 
-$watcher = New-Object System.IO.FileSystemWatcher
-$watcher.Path = Get-Location
-$watcher.Filter = "*.*"
-$watcher.IncludeSubdirectories = $true
-$watcher.EnableRaisingEvents = $true
+$currentDate = Get-Date -Format "yyyy-MM-dd"
+$today = Get-Date
 
-$action = {
-    $path = $Event.SourceEventArgs.FullPath
-    $fileName = $Event.SourceEventArgs.Name
-    $changeType = $Event.SourceEventArgs.ChangeType
-    
-    # Skip .git folder changes
-    if ($path -match "\.git") { return }
-    
-    # Only trigger on file changes (not directories)
-    if (Test-Path $path -PathType Leaf) {
-        Write-Host "File changed: $fileName" -ForegroundColor Cyan
-        
-        try {
-            # Stage only the specific file that changed
-            git add "$fileName"
-            git commit -m "Update $fileName"
-            git push origin master
-            Write-Host "Successfully pushed: $fileName" -ForegroundColor Green
-        } catch {
-            Write-Host "Error: $_" -ForegroundColor Red
-        }
-    }
+Write-Host "Finding files changed on $currentDate..." -ForegroundColor Yellow
+
+$changedFiles = Get-ChildItem -Recurse -File | Where-Object {
+    $_.LastWriteTime.Date -eq $today.Date -and $_.FullName -notmatch "\\\.git"
+} | ForEach-Object {
+    $_.FullName -replace [regex]::Escape((Get-Location).Path + "\"), ""
 }
 
-Register-ObjectEvent $watcher "Changed" -Action $action | Out-Null
-Register-ObjectEvent $watcher "Created" -Action $action | Out-Null
-
-Write-Host "Watching for file changes... Press Ctrl+C to stop." -ForegroundColor Yellow
-
-# Keep the script running
-while ($true) { Start-Sleep -Seconds 1 }
+if ($changedFiles.Count -gt 0) {
+    Write-Host "Committing changes for $currentDate..." -ForegroundColor Green
+    try {
+        foreach ($file in $changedFiles) {
+            git add "$file"
+        }
+        git commit -m "Daily changes for $currentDate"
+        git push origin master
+        Write-Host "Successfully pushed $changedFiles.Count files for $currentDate" -ForegroundColor Green
+    } catch {
+        Write-Host "Error committing/pushing: $_" -ForegroundColor Red
+    }
+} else {
+    Write-Host "No changes found for $currentDate" -ForegroundColor Cyan
+}
