@@ -1,5 +1,5 @@
 # Auto Git Push Script
-# This script finds all files changed today and commits/pushes them
+# This script finds all files changed today and commits each one separately, then pushes
 
 $currentDate = Get-Date -Format "yyyy-MM-dd"
 $today = Get-Date
@@ -13,14 +13,17 @@ $changedFiles = Get-ChildItem -Recurse -File | Where-Object {
 }
 
 if ($changedFiles.Count -gt 0) {
-    Write-Host "Committing changes for $currentDate..." -ForegroundColor Green
+    Write-Host "Committing each file separately for $currentDate..." -ForegroundColor Green
+    $commitCount = 0
     try {
         foreach ($file in $changedFiles) {
             git add "$file"
+            git commit -m "Update $file"
+            $commitCount++
+            Write-Host "Committed: $file" -ForegroundColor Cyan
         }
-        git commit -m "Daily changes for $currentDate"
         git push origin master
-        Write-Host "Successfully pushed $changedFiles.Count files for $currentDate" -ForegroundColor Green
+        Write-Host "Successfully pushed $commitCount commits for $currentDate" -ForegroundColor Green
     } catch {
         Write-Host "Error committing/pushing: $_" -ForegroundColor Red
     }
