@@ -18,7 +18,7 @@ if ($changedFiles.Count -gt 0) {
     try {
         foreach ($file in $changedFiles) {
             git add "$file"
-            git commit -m "Update $file"
+            git commit -m "$file"
             $commitCount++
             Write-Host "Committed: $file" -ForegroundColor Cyan
         }
